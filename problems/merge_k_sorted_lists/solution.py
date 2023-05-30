@@ -4,18 +4,6 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-
-        if not lists:
-            return None
-
-        ret = lists[0]
-
-        for l in lists[1:]:
-            ret = self.mergeTwoLists(ret, l)
-
-        return ret
-
 
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
 
@@ -42,3 +30,19 @@ class Solution:
             list2 = list2.next
 
         return first.next
+
+
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+
+        if not lists:
+            return None
+
+        elif len(lists) == 1:
+            return lists[0]
+
+        elif len(lists) == 2:
+            return self.mergeTwoLists(lists[0], lists[1])
+
+        a = lists[0:len(lists)//2]
+        b = lists[len(lists)//2:]
+        return self.mergeTwoLists(self.mergeKLists(a), self.mergeKLists(b))
